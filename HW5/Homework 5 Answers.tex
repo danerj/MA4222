@@ -1,0 +1,810 @@
+\documentclass[a4paper]{article}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{listings}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\pagenumbering{gobble}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\setlist[enumerate,1]{start=1}
+\setlength\parindent{0pt}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{mathdots}
+
+\title{MA 595 Homework 5}
+
+\begin{document}
+\maketitle
+
+\section*{Practice Problems}
+
+\subsection*{Linear Algebra 4th Edition Hefferon}
+
+\begin{enumerate}
+\item{Exercise 5.4.1.13}
+What are the possible minimal polynomials if a matrix has the given characteristic polynomial?
+\begin{enumerate}
+	\item $(x-3)^4$ \\
+	The possible minimal polynomials are 
+	$$
+	(x-3),\quad  (x-3)^2, \quad (x-3)^3, \quad (x-3)^4 \;.
+	$$ 
+	\item $(x + 1)^3(x − 4)$ \\
+	The possible minimal polynomials are 
+	$$
+	(x+1)(x-4), \quad (x+1)^2(x-4), \quad (x+1)^3(x-4) \;.
+	$$ 
+	\item $(x − 2)^2(x − 5)^2$ \\
+	The possible minimal polynomials are 
+	$$
+	(x-2)(x-5), \quad (x-2)^2(x-5), \quad (x-2)(x-5)^2, \quad
+	(x-2)^2(x-5)^2 \;.
+	$$
+	\item $(x + 3)^2(x − 1)(x − 2)^2$
+	The possible minimal polynomials are 
+	$$
+	(x+3)(x-1)(x-2), \; (x+3)^2(x-1)(x-2), \;
+	(x+3)(x-1)(x-2)^2, \; (x+3)^2(x-1)(x-2)^2 \;.
+	$$
+\end{enumerate}
+
+\item{Exercise 5.4.1.14} For this matrix
+$$
+T = 
+\begin{pmatrix}
+0 & 1 & 0 & 1\\
+1 & 0 & 1 & 0\\
+0 & 1 & 0 & 1\\
+1 & 0 & 1 & 0
+\end{pmatrix}
+$$
+find the characteristic polynomial and the minimal polynomial. \\
+
+$$
+p(x) = \det(T- xI) = \det
+\begin{pmatrix}
+-x & 1 & 0 & 1\\
+1 & -x & 1 & 0\\
+0 & 1 & -x & 1\\
+1 & 0 & 1 & -x
+\end{pmatrix} 
+= x^2(x^2 -4) = x^2(x-2)(x+2) \;.
+$$
+
+The minimal polynomial must be either $x(x-2)(x+2) = x(x^2-4)$ or $x^2(x-2)(x+2) = x^2(x^2-4)$. Since we want the polynomial of minimal degree, try the former first.
+
+$$
+T(T^2 - 4I) = 
+\begin{pmatrix}
+0 & 1 & 0 & 1\\
+1 & 0 & 1 & 0\\
+0 & 1 & 0 & 1\\
+1 & 0 & 1 & 0
+\end{pmatrix}
+\left(
+\begin{pmatrix}
+2 & 0 & 2 & 0\\
+0 & 2 & 0 & 2\\
+2 & 0 & 2 & 0\\
+0 & 2 & 0 & 2
+\end{pmatrix}
+- \begin{pmatrix}
+4 & 0 & 0 & 0\\
+0 & 4 & 0 & 0\\
+0 & 0 & 4 & 0\\
+0 & 0 & 0 & 4
+\end{pmatrix}
+\right)
+= 0_{4\times 4} \;.
+$$
+Conclude $m(x) = x(x-2)(x+2) = x(x^2 - 4)$. 
+
+\item{Exercise 5.4.1.16 (c)} Find the minimal polynomial of this matrix
+$$T =
+\begin{pmatrix}
+3 & 0 & 0 \\
+1 & 3 & 0 \\
+0 & 1 & 3
+\end{pmatrix}
+$$
+Find the characteristic polynomial first to help find the minimal polynomial.
+$$
+p(x) = \det(T - xI) = \det \begin{pmatrix}
+3-x & 0 & 0 \\ 1 & 3-x & 0 \\ 0 & 1 & 3-x
+\end{pmatrix} = (3-x)^3 = -1(x-3)^3 \;.
+$$
+Recall that the minimal polynomial must be monic, so divide by the leading coefficent -1 to see that the minimal polynomial must be one of $x-3, (x-3)^2, (x-3)^3$.
+$$
+T-3I = 
+\begin{pmatrix} 0&0&0 \\ 1&0&0 \\ 0&1&0\end{pmatrix}, \quad 
+(T-3I)^2 = 
+\begin{pmatrix} 0&0&0 \\ 0&0&0 \\ 1&0&0 \end{pmatrix}, \quad
+(T-3I)^3 = 
+\begin{pmatrix} 0&0&0 \\ 0&0&0 \\ 0&0&0 \end{pmatrix} \;.
+$$
+Conclude $m(x) = (x-3)^3$. 
+
+\item{Exercise 5.4.1.17} What is the minimal polynomial of the differentiation operator d/dx on $\mathcal{P}_n$? \\
+
+This could be found by using the differentiation matrix, but considering that by differentiating a degree $n$ polynomial $n+1$ times gives the zero map, it follows that $m(x) = x^{n+1}$. 
+
+\item{Exercise 5.4.1.18} Find the minimal polynomial of matrices of this form
+$$ T =
+\begin{pmatrix}
+\lambda & 0 & 0 & \dots & & 0 \\
+1 & \lambda & 0 & & & 0 \\
+0 & 1 & \lambda \\
+& & & \ddots \\
+& & & & \lambda & 0 \\
+0 & 0 & \dots & & 1 & \lambda
+\end{pmatrix}
+$$
+where the scalar $\lambda$ is fixed (i.e., is not a variable). \\
+
+For a $n\times n$ version of this matrix $T$, the characteristic polynomial is $p(x) = (\lambda - x)^n$ so $m(x)$ is one of $x-\lambda$, $(x-\lambda)^2, \dots, (x-\lambda)^n$. What follows uses $T \in \mathbb{R}^{4\times 4}$ to help visualize what occurs as we try each of these candidates in ascending order of degree, but the behavior seen is the similar for the general case.
+$$
+T - \lambda I = 
+\begin{pmatrix}
+0&0&0&0\\ 1&0&0&0 \\ 0&1&0&0 \\ 0&0&1&0
+\end{pmatrix}, \;
+(T - \lambda I)^2 = 
+\begin{pmatrix}
+0&0&0&0\\ 0&0&0&0 \\ 1&0&0&0 \\ 0&1&0&0
+\end{pmatrix},
+$$
+$$
+(T - \lambda I)^3 = 
+\begin{pmatrix}
+0&0&0&0\\ 0&0&0&0 \\ 0&0&0&0 \\ 1&0&0&0
+\end{pmatrix}, \;
+(T - \lambda I)^4 =
+\begin{pmatrix}
+0&0&0&0\\ 0&0&0&0 \\ 0&0&0&0 \\ 0&0&0&0
+\end{pmatrix} \;.
+$$
+
+In general for the $n\times n$ case, $(T-\lambda I)^n = 0_{n\times n}$ and $n$ is the smallest positive integer for which this occurs. Conclude $m(x) = (x-\lambda)^n$. 
+
+\item{Exercise 5.4.1.20} What is the minimal polynomial of the map $\pi : \mathbb{C}^3 \rightarrow \mathbb{C}^3$ projecting onto the first two coordinates? \\
+
+The matrix corresponding to this map is
+$$\Pi = \begin{pmatrix}
+1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 0 
+\end{pmatrix}
+$$
+which as the characteristic equation $p_{\Pi}(x) = x(x-1)^2$.
+$$
+\Pi ( \Pi - I) =
+\begin{pmatrix}
+1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 0 
+\end{pmatrix}
+\begin{pmatrix}
+0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & -1 
+\end{pmatrix}  =
+\begin{pmatrix}
+0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 
+\end{pmatrix}
+$$
+The minimal polynomial of $\pi$ is $m(x) = x(x-1)$. Notice that for a projection $\pi$, we have $\pi^2 = \pi \implies \pi^2 - \pi = 0$. From this we could deduce that $m(x) = x^2 - x = x(x-1)$ without finding the characteristic equation and testing factors.
+
+\item{Exercise 5.4.1.22} What is wrong with this claimed proof of Lemma 1.9: "if $c(x) = |T − xI|$ then $c(T) = |T − T I| = 0$" ? \\
+
+The $x$ in $c(x)$ must be a scalar. First $c(x)$ is generated by the choice of scalar $x$ and the matrix $T$ can be used in the corresponding matrix equation. 
+
+\item{Exercise 5.4.1.24} Prove that the minimal polynomial of an $n\times n$ matrix has degree at most $n$ (not $n^2$ as a person might guess from this subsection's opening). Verify that this
+maximum, $n$, can happen. \\
+
+We know by Cayley-Hamilton that the minimal polynomial of a transformation or square matrix divides its characteristic equation. For an $n\times n$ matrix, the characteristic equation has degree $n$. So the minimal polynomial has degree $n$ or less. The diagonal matrix $D$ with diagonal elements $1,2,3$ has the minimal polynomial $m(x) = (x-1)(x-2)(x-3)$, which is degree $n = 3$ (see Exercise 27). 
+
+\item{Exercise 5.4.1.26} What is the minimal polynomial of a zero map or matrix? Of an identity map or matrix? \\
+
+The minimal polynomial of the zero map is $m(x) = x$ (in the nontrivial case where $m(x)$ must be of degree at least one). The minimal polynomial of an identity map is $m(x) = x-1$. 
+
+\item{Exercise 5.4.1.27}  What is the minimal polynomial of a diagonal matrix? \\
+
+If $D$ is an $n\times n$ diagonal matrix with diagonal elements $d_1, \dots d_n$, then the characteristic polynomial of $D$ is $p(x) = (d_1  - x)(d_2 - x) \dots (d_n - x)$. Suppose among the diagonal elements we have $r \leq n$ distinct values. Then for some positive integers $q_1, \dots , q_r$, $p(x) = (d_1-x)^{q_1}\dots (d_r - x)^{q_r}$. Note that since $D - d_rI$ has a zero in the diagonal entries corresponding to all instances of $d_r$ in $D$, we only need $D-d_rI$ one time for each $d_r$ to produces the zero matrix. That is, $m(x) = (x-d_1)(x-d_2)\dots (x-d_r)$. If all diagonal elements are distinct then this would just be $m(x) = (x-d_1)(x-d_2)\dots (x-d_n)$. For example,
+
+$$ 
+D = \begin{pmatrix}
+7 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 7 & 0 \\
+0 & 0 & 0 & 7 \\
+\end{pmatrix} \implies m(x) = (x-1)(x-7) \;.
+$$
+
+\item{Exercise 5.4.1.31} Let $f(x)$ be a polynomial. Prove that if $A$ and $B$ are similar matrices then $f(A)$
+is similar to $f(B)$. \\
+
+Suppose $A$ and $B$ are similar matrices with $A = PBP^{-1}$ for some invertible matrix $P$. For any $n \in \mathbb{N}\cup \{0\}$ and any $c \in \mathbb{R}$, 
+
+$$
+cA^n = c(PBP^{-1})^n = cPB^nP^{-1} \;.
+$$
+
+Suppose $f(x) = c_nx^n + c_{n-1}x^{n-1} + \dots + c_0$. Then,
+\begin{align*}
+f(A) &= c_nA^n + c_{n-1}A^{n-1} \dots + c_0I\\
+&= c_nPB^nP^{-1} + c_{n-1}PB^{n-1}P^{-1} + \dots + c_0PP^{-1} \\
+&= P(c_nB^n + \dots c_0I)P^{-1} \\
+& = Pf(B)P^{-1} \;.
+\end{align*}
+This shows that $f(A)$ is similar to $f(B)$. 
+
+\begin{enumerate}
+	\item Now show that similar matrices have the same
+	characteristic polynomial. \\
+	
+	By the above, for similar matrices $A$ and $B$ and a 
+	polynomial $f(x)$, $f(A)$ is similar to $f(B)$. In 
+	particular, $A-xI$ is similar to $B-xI$. Similar matrices
+	have the same determinant (Proof: If $C$ and $D$ are with
+	$C = PDP^{-1}$ then $|C| = |PDP^{-1}| = |P||D||P^{-1}| =
+	|P||D|/|P| = |D|$). Therefore, $p_A(x) = |A-xI| = |B-xI| =
+	p_B(x)$. \\
+	
+	\item Show that similar matrices have the same minimal
+	polynomial. \\
+	
+	Since $P$ and $P^{-1}$ are invertible, $P$ and $P^{-1}$ are
+	not the zero map and cannot map any nonzero vector to the 
+	zero vector. This means that for any polynomial $f(A)$,
+	$0_{n\times n} = f(A) = Pf(B)P^{-1}$ if and only if $f(B) = 
+	0_{n\times n}$. Since $A$ and $B$ have the same
+	characteristic polynomial, the possible candidates for the
+	minimal polynomial are the same for $A$ and $B$ and so it 
+	must be the case that $A$ and $B$ have the same minimal
+	polynomial.
+\end{enumerate}
+
+\item{Exercise 5.4.1.34}  Any transformation or square matrix has a minimal polynomial. Does the converse hold? \\
+
+Yes. Let $m(x) = x^n + \dots + c_0$, $n\geq 1$, be an arbitrary monic polynomial. This (or $-m(x)$) is the determinant of the matrix
+$$
+\begin{pmatrix}
+-x & 0 & 0 & & & c_0 \\
+0& 1-x & 0 & & & c_1 \\
+0 & 0 & 1-x & & & c_2 \\
+& & & \ddots & & \\
+& & & & 1-x & c_{n-1}
+\end{pmatrix} \;.
+$$
+
+\item{Exercise 5.4.2.16} Each matrix is in Jordan form. State its characteristic polynomial and its minimal polynomial.
+
+\begin{enumerate}
+	\item
+	$$
+	\begin{pmatrix}
+	3 & 0 \\ 1 & 3
+	\end{pmatrix}
+	\implies p(x) = m(x) = (x-3)^2
+	$$
+	\item
+	$$
+	\begin{pmatrix}
+	-1 & 0 \\ 0 & -1
+	\end{pmatrix}
+	\implies p(x) = (x+1)^2, \; m(x) = x+1
+	$$
+	\item
+	$$
+	\begin{pmatrix}
+	2 & 0 & 0 \\ 1 & 2 & 0 \\ 0 & 0 & -1/2
+	\end{pmatrix}
+	\implies p(x) = m(x) = (x-2)^2(x+1/2)
+	$$
+	\item
+	$$
+	\begin{pmatrix}
+	3 & 0 & 0 \\ 1 & 3 & 0 \\ 0 & 1 & 3
+	\end{pmatrix}
+	\implies p(x) = m(x) = (x-3)^3
+	$$
+	\item
+	$$
+	\begin{pmatrix}
+	3&0&0&0 \\ 1&3&0&0 \\ 0&0&3&0 \\ 0&0&1&3
+	\end{pmatrix}
+	\implies p(x) = (x-3)^4, \; m(x) = (x-3)^2
+	$$
+	\item
+	$$
+	\begin{pmatrix}
+	4&0&0&0 \\ 1&4&0&0 \\ 0&0&-4&0 \\ 0&0&1&-4
+	\end{pmatrix}
+	\implies p(x) = m(x) = (x-4)^2(x+4)^2
+	$$
+	\item
+	$$
+	\begin{pmatrix}
+	5&0&0 \\ 0&2&0 \\ 0&0&3
+	\end{pmatrix}
+	\implies p(x) = m(x) = (x-5)(x-2)(x-3)
+	$$
+	\item
+	$$
+	\begin{pmatrix}
+	5&0&0&0 \\ 0&2&0&0 \\ 0&0&2&0 \\ 0&0&0&3
+	\end{pmatrix}
+	\implies p(x) = (x-5)(x-2)^2(x-3), \; m(x) = (x-5)(x-2)(x-3)
+	$$
+	\item
+	$$
+	\begin{pmatrix}
+	5&0&0&0 \\ 0&2&0&0 \\ 0&1&2&0 \\ 0&0&0&3
+	\end{pmatrix}
+	\implies p(x) = m(x) = (x-5)(x-2)^2(x-3)
+	$$
+\end{enumerate}
+
+\item{Exercise 5.4.2.17} Find the Jordan form from the given data.
+
+\begin{enumerate}
+	\item The matrix $T$ is $5\times 5$ with the single
+	eigenvalue 3. The nullities of the powers are: $T − 3I$ has
+	nullity two, $(T − 3I)^2$ has nullity three, $(T − 3I)^3$ has
+	nullity four, and $(T − 3I)^4$ has nullity five.
+	$$
+	T =
+	\begin{pmatrix}
+	3&0&0&0&0 \\ 1&3&0&0&0 \\ 0&1&3&0&0 \\ 0&0&1&3&0 \\ 0&0&0&0&3
+	\end{pmatrix}
+	$$
+	Then $T$ has only $3$ as its only eigenvalue. The nullity of 
+	$T-3I, (T-3I)^2, (T-3I)^3, (T-3I)^4$ can be determined by
+	counting the number of columns that are all 0's. These 
+	matrices are shown below in this order.
+	$$
+	\begin{pmatrix}
+	0&0&0&0&0\\ 1&0&0&0&0\\ 0&1&0&0&0\\ 0&0&1&0&0\\ 0&0&0&0&0\\
+	\end{pmatrix}, \; 
+	\begin{pmatrix}
+	0&0&0&0&0\\ 0&0&0&0&0\\ 1&0&0&0&0\\ 0&1&0&0&0\\ 0&0&0&0&0\\
+	\end{pmatrix}, \;
+	\begin{pmatrix}
+	0&0&0&0&0\\ 0&0&0&0&0\\ 0&0&0&0&0\\ 1&0&0&0&0\\ 0&0&0&0&0\\
+	\end{pmatrix}, \;
+	\begin{pmatrix}
+	0&0&0&0&0\\ 0&0&0&0&0\\ 0&0&0&0&0\\ 0&0&0&0&0\\ 0&0&0&0&0\\
+	\end{pmatrix}
+	$$
+	\item The matrix $S$ is $5\times 5$ with two eigenvalues. For
+	the eigenvalue 2 the nullities are: $S − 2I$ has nullity 2,
+	and $(S − 2I)^2$ has nullity 4. For the eigenvalue −1,
+	$S + 1I$ has nullity 1.
+	$$
+	T =
+	\begin{pmatrix}
+	-1&0&0&0&0\\ 0&2&0&0&0\\ 0&1&2&0&0\\ 0&0&0&2&0\\ 0&0&0&1&2
+	\end{pmatrix}
+	$$
+	$$
+	T+I = 
+	\begin{pmatrix}
+	0&0&0&0&0\\ 0&3&0&0&0\\ 0&1&3&0&0\\ 0&0&0&3&0\\ 0&0&0&1&3
+	\end{pmatrix}, \;
+	T - 2I = 
+	\begin{pmatrix}
+	-3&0&0&0&0\\ 0&0&0&0&0\\ 0&1&0&0&0\\ 0&0&0&0&0\\ 0&0&0&1&0
+	\end{pmatrix}, \;
+	(T - 2I)^2 = 
+	\begin{pmatrix}
+	9&0&0&0&0\\ 0&0&0&0&0\\ 0&0&0&0&0\\ 0&0&0&0&0\\ 0&0&0&0&0
+	\end{pmatrix}
+	$$
+\end{enumerate}
+\end{enumerate}
+
+\newpage
+\subsection*{Linear Algebra 4th Edition Strang}
+
+\begin{enumerate}
+\item{Problem 6.6.1} If $C = F^{-1} AF$ and also $C = G^{-1} BG$, what matrix $M$ gives $B = M^{-1} AM$? 
+Conclusion: If $C$ is similar to $A$ and also to $B$ then \_\_\_ 
+$$
+B = GCG^{-1} = G(F^{-1}AF)G^{-1} = GF^{-1}AFG^{-1} = M^{-1}AM, \quad \boxed{M = FG^{-1}, M^{-1} = GF^{-1}} \;.
+$$
+$C$ is similar to $A$ and also to $B$ then $A$ is similar to $B$.
+
+\item{Problem 6.6.6} There are sixteen 2 by 2 matrices whose entries are $0$'s and $1$'s. Similar matrices go 
+into the same family. How many families? How many matrices (total 16) in each family?\\
+
+Similar matrices have the same eigenvalues. So to narrow things down we can first group by eigenvalues. However, similar matrices also must have the same number of linearly independent eigenvectors. Having the same eigenvalues does not alone imply that two matrices are similar. So then within each set that groups matrices by eigenvalue, there are subsets that group matrices by the number of linearly independent eigenvectors. Unless something was missed, all of the 0,1 matrices with eigenvalues 0 and 1 have the same number (2) of independent eigenvalues. The zero matrix has two independent eigenvectors while the other two matrices in its group each have only one independent eigenvector. The identity matrix has two independent eigenvectors while the other matrices in its group each have one.
+
+\begin{align*}
+\lambda = 0,0 \quad &\left\lbrace
+\left\lbrace\begin{pmatrix}0&0\\0&0\end{pmatrix}\right\rbrace,
+\left\lbrace\begin{pmatrix}0&1\\0&0\end{pmatrix},
+\begin{pmatrix}0&0\\1&0\end{pmatrix} \right\rbrace\right\rbrace\\
+\lambda = 0,1 \quad &\left\lbrace \left\lbrace
+\begin{pmatrix}1&0\\0&0\end{pmatrix},
+\begin{pmatrix}0&0\\0&1\end{pmatrix},
+\begin{pmatrix}1&1\\0&0\end{pmatrix},
+\begin{pmatrix}0&0\\1&1\end{pmatrix},
+\begin{pmatrix}1&0\\1&0\end{pmatrix},
+\begin{pmatrix}0&1\\0&1\end{pmatrix}\right\rbrace\right\rbrace \\
+\lambda = 0,2 \quad &\left\lbrace \left\lbrace
+\begin{pmatrix}1&1\\1&1\end{pmatrix}\right\rbrace\right\rbrace \\
+\lambda = 1,1 \quad &\left\lbrace
+\left\lbrace \begin{pmatrix}1&0\\0&1\end{pmatrix}\right\rbrace,
+\left\lbrace\begin{pmatrix}1&1\\0&1\end{pmatrix},
+\begin{pmatrix}1&0\\1&1\end{pmatrix}\right\rbrace\right\rbrace\\
+\lambda = \frac{1\pm \sqrt{5}}{2} \quad &\left\lbrace\left\lbrace
+\begin{pmatrix}0&1\\1&1\end{pmatrix},
+\begin{pmatrix}1&1\\1&0\end{pmatrix}\right\rbrace\right\rbrace \\
+\lambda = \pm 1 \quad &\left\lbrace \left\lbrace
+\begin{pmatrix} 0&1\\1&0 \end{pmatrix}\right\rbrace \right\rbrace
+\end{align*}
+
+\item{Problem 6.6.7}
+\begin{enumerate}
+	\item
+	If $x$ is in the nullspace of $A$ show that $M^{-1}x$ is in
+	the nullspace of $M^{-1}AM$. 
+	$$
+	Ax = 0 \implies M^{-1}AM(M^{-1}x) = M^{-1}Ax = M^{-1}0 = 0\;.
+	$$
+	\item 
+	The nullspaces of $A$ and $M^{-1}AM$ have the same 
+	(vectors)(basis)(dimension). 
+	
+	The nullspaces of $A$ and $M^{-1}AM$ have the same dimension.
+	The nullspaces generally have different bases and contain 
+	different vectors. 	
+\end{enumerate}
+
+\item{Problem 6.6.8} Suppose$ Ax = \lambda x$ and $Bx = \lambda x$ with the same $\lambda$'s and $x$'s. With $n$ independent 
+eigenvectors we have $A = B$: Why? Find $A \neq B$ when both have eigenvalues 0,0 but only one line of eigenvectors $(x_1, 0)$.\\
+
+Suppose there are $n$ independent eigenvectors $x_1, \dots , x_n$ and these form the columns of the matrix $S$. Then $S$ is invertible. Let $\Lambda$ be the diagonal matrix with $\lambda_1, \dots , \lambda_n$ on the diagonal ordered so that the $\lambda$'s are ordered to match with corresponding eigenvectors in $S$. Then $AS = \Lambda S \iff A = S^{-1}\Lambda S$ and $BS = \Lambda S \iff B =  S^{-1}\Lambda S$. Therefore $A = B$. \\
+
+Consider, $A\neq B$ with $\lambda_1 = \lambda_2 = 0$ but with the single line of eigenvectors $(x_1, 0)^T$ given by:
+$$
+A = \begin{pmatrix} 0& 1 \\ 0 & 0 \end{pmatrix}, 
+\quad
+B = \begin{pmatrix} 0& 2 \\ 0 & 0 \end{pmatrix} \;.
+$$
+
+\item{Problem 6.6.10} By direct multiplication, find $J^2$ and $J^3$ when
+$$
+J = \begin{pmatrix}
+\lambda & 1 \\ 0 & \lambda
+\end{pmatrix}
+$$
+Guess the form of $J^k$. Set $k = 0$ to find $J^0$. Set $k = -1$ to find $J^{-l}$.
+\begin{align*}
+J^2 &=
+\begin{pmatrix}
+\lambda^2 & 2\lambda \\ 0 & \lambda^2
+\end{pmatrix} \\
+J^3 &= \begin{pmatrix}
+\lambda^3 & 3\lambda^2 \\ 0 & \lambda^3
+\end{pmatrix} \\
+J^k &= \begin{pmatrix}
+\lambda^k & k\lambda^{k-1} \\ 0 & \lambda^k
+\end{pmatrix} \\
+J^0 &= \begin{pmatrix}
+\lambda^0 & 0\lambda^{0-1} \\ 0 & \lambda^0
+\end{pmatrix}
+= \begin{pmatrix}
+1 & 0 \\ 0 & 1
+\end{pmatrix} \\
+J^{-1} &= \begin{pmatrix}
+\lambda^{-1} & -\lambda^{-2} \\ 0 & \lambda^{-1}
+\end{pmatrix} \\
+\end{align*} 
+
+\item{Problem 6.6.14} Prove that $A^T$ is always similar to $A$.
+
+\begin{enumerate}
+	\item $A$ and $A^T$ have the same eigenvalues since
+	$$
+	p_A(\lambda) = \det(\lambda I - A) = \det (\lambda I - A)^T
+	= \det (\lambda I - A^T) = p_{A^{T}}(\lambda) \;.
+	$$
+	
+	\item For one Jordan block $J_i$: Find $M_i$ so that
+	$M_i^{-1} J_i M_i = J_i^T$.  \\
+	$$
+	M_i = M_i^{-1} = \begin{pmatrix}
+	& & & 1 \\ & & 1 & \\  & \iddots & & & \\ 1 & & & 
+	\end{pmatrix}
+	$$
+	Then $M_i^{-1} J_i M_i = J_i^T$. Multiplying by $M_i$ on the
+	right reverses the ordering within each row of $J_i$.
+	Multiplying on the left by $M_i^{-1}$ reverses the ordering
+	within each column. The order of the diagonal
+	elements is reversed in $J_i$ and $M_i^{-1}J_i M_i$ but this
+	does not matter since all diagonal elements are the same 
+	($\lambda_i$) for any particular Jordan block $J_i$. 
+	
+	\item For any $J$ with blocks $J_i$: Build $M_0$ from blocks
+	so that $M_0^{-1} J M_0 = J^T$. \\
+	
+	For Jordan blocks $J_1, \dots J_r$, not necessarily of the
+	same dimension, but each square and with corresponding
+	matrices $M_1 = M_1^{-1}, \dots , M_r = M_r^{-1}$ of the form
+	described above, take
+	\begin{align*}
+	M_0 = M_0^{-1} &= \begin{pmatrix} 
+	M_1 & & & \\ & M_2 & & \\ & & \ddots & \\
+	& & & M_r \end{pmatrix} \\
+	M_0^{-1}JM_0 &= 
+	\begin{pmatrix}
+	M_1^{-1} & & \\ & \ddots & \\ & & M_r^{-1}
+	\end{pmatrix}
+	\begin{pmatrix}
+	J_1 & & \\ & \ddots & \\ & & J_r
+	\end{pmatrix}
+	\begin{pmatrix}
+	M_1 & & \\ & \ddots & \\ & & M_r
+	\end{pmatrix}\\
+	&= \begin{pmatrix}
+	M_1^{-1}J_1M_1 & & \\ & \ddots & \\ & & M_r^{-1}J_rM_r
+	\end{pmatrix} \\
+	& = \begin{pmatrix}
+	J_1^T & & \\ & \ddots & \\ & & J_r^T
+	\end{pmatrix} = \begin{pmatrix}
+	J_1 & & \\ & \ddots & \\ & & J_r
+	\end{pmatrix}^T = J^T \;.
+	\end{align*}
+	
+	\item For any $A = M J M^{-1}$: Show that $A^T$ is similar to
+	$J^T$ and so to $J$ and to $A$. \\
+	
+	If $A = MJM^{-1}$, then $A^T = (M^{-1})^TJ^TM^T$. This shows
+	that $A^T$ is similar to $J^T$. We have shown that $J$ is 
+	similar to $J^T$ and so $A$ is similar to $J$, $J$ is 
+	similar to $J^T$, and $J^T$ is similar to $B$. Therefore, 
+	$A$ is similar to $B$. 
+\end{enumerate}
+
+\item{Problem 6.6.17} True or false, with a good reason: 
+\begin{enumerate}
+	\item 
+	A symmetric matrix can't be similar to a nonsymmetric matrix.
+	\\
+	
+	False. Consider a diagonalizable but nonsymmetric matrix
+	$A$. Then $A$ is similar to $\Lambda$, which is symmetric. So
+	a symmetric matrix can be similar to a nonsymmetric matrix.
+	
+	\item
+	An invertible matrix can't be similar to a singular matrix.\\
+	
+	True. Suppose $A$ is invertible and similar to a singular
+	matrix $B$ with $A = MBM^{-1}$. Then $0 \neq \det(A)
+	= \det(MBM^{-1}) = \det(B) = 0$. This is a contradiction so
+	conclude that an invertible matrix can't be similar to a 
+	singular matrix. 
+	
+	\item
+	$A$ can't be similar to $-A$ unless $A = 0$. \\
+	
+	False.
+	\begin{align*}
+	A &= \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix}, \quad
+	M = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \\
+	M(-A)M^{-1} & = 
+	\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}
+	\begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}
+	\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}
+	= \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}
+	\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}
+	= \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix} = A
+	\end{align*}
+	\item
+	$A$ can't be similar to $A + I$. \\
+	
+	True. We know that similar matrices have the same eigenvalues
+	but each eigenvalue $\lambda$ of $A$ corresponds to the 
+	eigenvalue of $\lambda + 1$ of $A+I$ since
+	$$
+	Ax = \lambda x \implies (A+1)x = Ax + x = (\lambda+1)x \;.
+	$$
+	This means $A$ and $A+I$ cannot have the same eigenvalues and
+	so $A$ and $A+I$ must not be similar.
+\end{enumerate}
+
+\item{Problem 6.6.18} If $B$ is invertible, prove that $AB$ is similar to $BA$ and show explicitly that $AB$ and $BA$ have the
+same eigenvalues. \\
+
+To show similarity, take $M = B^{-1}$  so that $AB = B^{-1}BAB = M(BA)M^{-1}$. If $\lambda$ is an eigenvalue of $AB$ with corresponding eigenvector $x$, then
+$ABx = \lambda x \implies BA(Bx) = \lambda Bx$, which shows that $\lambda$ is an eigenvalue of $BA$ with corresponding eigenvector $z = Bx$. 
+
+\item{Problem 6.6.22} If an $n$ by $n$ matrix $A$ has all eigenvalues $\lambda = 0$, prove that $A^n = $ zero matrix. \\
+
+The characteristic polynomial of $A$ is $p_A(x) = x^n$. By Cayley-Hamilton, $0_{n\times n} = p_A(A) = A^n$. 
+\end{enumerate}
+
+\newpage
+\section*{Assigned Problems}
+\begin{enumerate}
+\item{\textbf{Conjugate Gradient Method - Krylov Subspace Method}}
+
+Prove that the residual vectors $\vec{r}_k$ for $k=1,2,\ldots,n$ for the conjugate gradient method satisfy $\langle\vec{r}_k,\vec{v}_j\rangle=0$ for each $j=1,2,\ldots,k$ using mathematical induction as follows:
+\begin{enumerate}
+	\item 
+	Show that $\langle \vec{v}_1, \vec{r}_1\rangle=0$
+	
+	\begin{align*}
+	\langle \vec{v}_1,  \vec{r}_1\rangle & = 
+	\langle \vec{r}_0, \vec{r}_1\rangle \\
+	&= \langle \vec{r}_0, \vec{r}_0 - t_1A\vec{v}_1 \rangle \\
+	&= \langle \vec{r}_0, \vec{r}_0 \rangle
+	- t_1\langle \vec{r}_0, A\vec{v}_1\rangle \\
+	&= \langle \vec{r}_0, \vec{r}_0 \rangle
+	-\frac{\langle \vec{r_0}, \vec{r_0} \rangle}
+	{\langle \vec{v}_1, A\vec{v}_1 \rangle}
+	\langle  \vec{r}_0, A\vec{v}_1\rangle \\
+	&= \langle \vec{r}_0, \vec{r}_0 \rangle
+	-\frac{\langle \vec{r_0}, \vec{r_0} \rangle}
+	{\langle \vec{r}_0, A\vec{r}_0 \rangle}
+	\langle \vec{r}_0, A\vec{r}_0\rangle \\
+	&= 0 \;.
+	\end{align*}
+		
+	\item 
+	Assume $\langle\vec{r}_k,\vec{v}_j\rangle=0$ for each 
+	$k\leq\ell$ and $j=1,2,\ldots,k$, and show that this implies
+	that $\langle\vec{r}_{\ell+1},\vec{v}_j\rangle=0$ for each 
+	$j=1,2,\ldots,\ell$.
+	
+	\begin{align*}
+	\langle \vec{v}_j, \vec{r}_{\ell+1} \rangle
+	&= \langle \vec{v}_j,
+	\vec{r}_{\ell} - t_{\ell+1}A\vec{v}_{\ell+1} \rangle \\
+	&= \langle \vec{v}_j, \vec{r}_{\ell} \rangle - 
+	t_{\ell+1} \langle \vec{v}_j, A \vec{v}_{\ell+1} \rangle \\
+	&= 0 - 
+	t_{\ell+1} \langle \vec{v}_j, A \vec{v}_{\ell+1} \rangle 
+	\quad \text{by the assumption} \\
+	&= 0 - 0 \quad \text{since } 
+	\langle \vec{v}_j, A\vec{v}_i \rangle, i \neq j \\
+	&= 0 \;.
+	\end{align*}
+	\item
+	Show that
+	$\langle\vec{r}_{\ell+1},\vec{v}_{\ell+1}\rangle=0$.	
+	\begin{align*}
+	\langle\vec{v}_{\ell+1}, \vec{r}_{\ell+1}\rangle &=
+	\langle \vec{v}_{\ell+1},
+	\vec{r}_{\ell} - t_{\ell+1}A\vec{v}_{\ell+1}\rangle \\
+	&= \langle \vec{v}_{\ell+1}, \vec{r}_{\ell},\rangle - 
+	t_{\ell+1}\langle \vec{v}_{\ell+1},A\vec{v}_{\ell+1}\rangle\\
+	&= \langle\vec{r}_{\ell}+s_{\ell}\vec{v}_{\ell},
+	\vec{r}_{\ell}\rangle - 
+	t_{\ell+1}\langle \vec{v}_{\ell+1},A\vec{v}_{\ell+1}\rangle\\
+	&= \langle\vec{r}_{\ell}, \vec{r}_{\ell}\rangle
+	+s_{\ell}\langle \vec{v}_{\ell}, \vec{r}_{\ell}\rangle - 
+	t_{\ell+1}\langle \vec{v}_{\ell+1},A\vec{v}_{\ell+1}\rangle\\
+	&= \langle\vec{r}_{\ell}, \vec{r}_{\ell}\rangle + 0 - 
+	t_{\ell+1}\langle \vec{v}_{\ell+1},A\vec{v}_{\ell+1}\rangle\\
+	&= \langle\vec{r}_{\ell}, \vec{r}_{\ell}\rangle - 
+	\frac{\langle \vec{r}_{\ell}, \vec{r}_{\ell}\rangle }
+	{\langle \vec{v}_{\ell+1}, A\vec{v}_{\ell+1}\rangle }
+	\langle \vec{v}_{\ell+1},A\vec{v}_{\ell+1}\rangle\\
+	&= \langle\vec{r}_{\ell}, \vec{r}_{\ell}\rangle - 
+	\langle\vec{r}_{\ell}, \vec{r}_{\ell}\rangle \\
+	&= 0 \;.
+	\end{align*}
+\end{enumerate}
+
+\newpage
+\item{\textbf{Characteristic polynomial \& Cayley-Hamilton Theorem}}\\
+Let $p_A(t) = \det(tI − A)$ be the (monic) characteristic polynomial for $A \in \mathbb{R}^{n\times n}$.  Prove that $p_A(A) = 0$. \\
+
+Hint: Note that the roots of the polynomial $p_A(t)$ are the eigenvalues, so rewrite the characteristic
+polynomial in terms of factors of the eigenvalues. It might also be helpful to rewrite $A$ using the Schur
+Decomposition, $A = QRQ^T$ where $Q$ is orthogonal and $R$ is an upper triangular matrix where eigenvalues are on the diagonal.\\
+
+Let $\lambda_1, \dots , \lambda_n$ be the $n$ eigenvalues of $A$ (counting multiplicity in case of repeated eigenvalues) and $p_A(t) = k(t-\lambda_1)(t-\lambda_2)\dots (t-\lambda_n)$ be the characteristic polynomial of $A$. Let $A = QRQ^T$ be the Schur Decomposition of $A$. 
+\begin{align*}
+p_A(A) &= k(A - \lambda_1 I)(A - \lambda_2 I) \dots (A - \lambda_n I) \\
+&= k(QRQ^T - \lambda_1 I) (QRQ^T - \lambda_2 I) \dots (QRQ^T - \lambda_n I) \\
+&= k(QRQ^T - \lambda_1 QIQ^T) (QRQ^T - \lambda_2 QIQ^T) \dots (QRQ^T - \lambda_n QIQ^T) \\
+&= kQ(R - \lambda_1 I)Q^TQ(R - \lambda_2 I)Q^T \dots Q(R - \lambda_n I)Q^T \\
+&= kQ(R - \lambda_1 I)(R - \lambda_2 I) \dots (R - \lambda_n I)Q^T \\
+&= kQ0_{n\times n} Q^T \\
+&= 0_{n\times n} \;.
+\end{align*}
+
+The reason that $(R-\lambda_1)(R-\lambda_2) \dots (R -\lambda_n)$ gives the zero matrix comes from the fact that the eigenvalues of $A$ lie along the diagonal of $R$. Without loss of generality, suppose that $\lambda_1$ is the first diagonal element, $\lambda_2$ the second diagonal element, and so on. Then $R -\lambda_1I$ has a 0 as the first diagonal element, $R-\lambda_2I$ has a 0 as the second diagonal element, and so on. Multiplying a vector by a matrix with a zero in the i$^{\text{th}}$ diagonal element of matrix will zero out the i$^{\text{th}}$ element of the vector. So for any vector $x$, $(R-\lambda_nI)x$ has a 0 for element $n$, $R-\lambda_{n-1}I$ has a 0 for element $n-1$, $\dots$, and $(R - \lambda_1I)x$ has a 0 for the first element. Therefore multiplying by all these matrices gives $(R-\lambda_1I) \dots (R-\lambda_nI)x = 0 \in \mathbb{R}^{n}$. \\
+
+Question: Can the characteristic polynomial of $A$ always split as $p_A(t) = k(t-\lambda_1)(t-\lambda_2)\dots (t-\lambda_n)$? Is the $k$ necessary or is this always $1$ based on the definition $p_A(t) = \det(tI - A)$?
+
+\newpage
+\item{\textbf{Minimal Polynomials}} \\
+Show that similar matrices A and B have the same degree minimal polynomial. \\
+
+First prove that if $f(x)$ is a polynomial and $A$ and $B$ are similar matrices then $f(A)$ is similar to $f(B)$. \\
+
+Suppose $A$ and $B$ are similar matrices with $A = PBP^{-1}$ for some invertible matrix $P$. For any $n \in \mathbb{N}\cup \{0\}$ and any $c \in \mathbb{R}$, 
+
+$$
+cA^n = c(PBP^{-1})^n = cPB^nP^{-1} \;.
+$$
+
+Suppose $f(x) = c_nx^n + c_{n-1}x^{n-1} + \dots + c_0$. Then,
+\begin{align*}
+f(A) &= c_nA^n + c_{n-1}A^{n-1} \dots + c_0I\\
+&= c_nPB^nP^{-1} + c_{n-1}PB^{n-1}P^{-1} + \dots + c_0PP^{-1} \\
+&= P(c_nB^n + \dots c_0I)P^{-1} \\
+& = Pf(B)P^{-1} \;.
+\end{align*}
+This shows that $f(A)$ is similar to $f(B)$. 
+
+\begin{enumerate}
+	\item Now show that similar matrices have the same
+	characteristic polynomial. \\
+	
+	By the above, for similar matrices $A$ and $B$ and a 
+	polynomial $f(x)$, $f(A)$ is similar to $f(B)$. In 
+	particular, $xI-A$ is similar to $xI-B$. Similar matrices
+	have the same determinant (Proof: If $C$ and $D$ are with
+	$C = PDP^{-1}$ then $|C| = |PDP^{-1}| = |P||D||P^{-1}| =
+	|P||D|/|P| = |D|$). Therefore, $p_A(x) = |xI-A| = |xI-B| =
+	p_B(x)$. \\
+	
+	\item Show that similar matrices have the same minimal
+	polynomial. \\
+	
+	Since $P$ and $P^{-1}$ are invertible, $P$ and $P^{-1}$ are
+	not the zero map and cannot map any nonzero vector to the 
+	zero vector. This means that for any polynomial $f(A)$,
+	$0_{n\times n} = f(A) = Pf(B)P^{-1}$ if and only if $f(B) = 
+	0_{n\times n}$. Since $A$ and $B$ have the same
+	characteristic polynomial, the possible candidates for the
+	minimal polynomial are the same for $A$ and $B$ and so it 
+	must be the case that $A$ and $B$ have the same minimal
+	polynomial.
+	
+	\item Decide if these are similar.
+	$$
+	A = \begin{pmatrix}
+	1 & 3 \\ 2 & 3
+	\end{pmatrix}, \quad
+	B = \begin{pmatrix}
+	4 & -1 \\ 1 & 1
+	\end{pmatrix}
+	$$
+	If these matrices are similar, they will have the same 
+	characteristic equation. \\
+	\begin{align*}
+	p_A(x) &= \det(xI - A) = (x-1)(x-3) - 6 = x^2 - 4x -3 \\
+	p_B(x) &= \det(xI-B) = (x-4)(x-1) + 1 = x^2 - 5x + 5
+	\end{align*}
+	$A$ and $B$ are not similar. 
+	
+\end{enumerate}
+
+\newpage
+\item{\textbf{Jordan Normal Form \& the Minimal Monic Polynomial}}\\
+Show that the minimal monic polynomial that annihilates $J$ is 
+$q_J(t) = \Pi_{i=1}^m (t-\lambda_i)^{r_i}$, where $m$ is the
+total number of distinct eigenvalues $\lambda_i$ and $r_i$
+is the order of the largest Jordan block of $J$ corresponding
+to the eigenvalue $\lambda_i$.\\
+
+For each Jordan block $J_i$ forming $J$, $(J_i - \lambda_i)^{r_i} = 0$ by Cayley-Hamilton. Then $q_j(J) = (J-\lambda_1)^{r_1}(J-\lambda_2)^{r_2}\dots (J- \lambda_m)^{r_m} = 0$ since each term in the product has 0's on the diagonals corresponding to $J_i$. 
+
+\end{enumerate}
+
+\end{document}
